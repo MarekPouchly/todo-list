@@ -1,0 +1,116 @@
+:root {
+    --font-color: #ebebeb;
+    --darkest-background: #1f2325;
+    --side-background: #373c3f;
+    --main-background: #2f3437;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--font-color);
+}
+
+button {
+    background: none;
+    border: none;
+    color: var(--font-color);
+}
+
+body {
+    background: var(--main-background);
+    color: var(--font-color);
+    font-family: 'Roboto', sans-serif;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 300px 1fr;
+    grid-template-areas: 
+        "header header"
+        "nav main"
+        "footer footer";
+    height: 100vh;
+    margin: 0;
+}
+
+/* Header */
+header {
+    grid-area: header;
+    background: var(--darkest-background);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.logo i {
+    font-size: 1.8rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+/* Navigation */
+.navigation {
+    grid-area: nav;
+    background: var(--side-background);
+    padding: 1.5rem;
+}
+
+.menu-links {
+    margin-bottom: 1rem;
+}
+
+.menu-link {
+    font-size: 1.3rem;
+    padding: 0.7rem 1.5rem;
+}
+
+.menu-link:hover, .menu-link:focus, .add-project:focus, .add-project:hover {
+    background: var(--main-background);
+    border-radius: 0.3rem;
+}
+
+.menu-link i, .add-project i {
+    padding-right: 0.7rem;
+}
+
+.projects h1 {
+    margin-bottom: 1rem;
+}
+
+.add-project {
+    text-align-last: left;
+    font-size: 1.3rem;
+    padding: 0.7rem 1.5rem;
+    width: 100%;
+}
+
+/* Main */
+.main {
+    grid-area: main;
+    background: var(--main-background);
+}
+
+/* Footer */
+.footer {
+    grid-area: footer;
+    background: var(--darkest-background);
+}
+
+.footer p {
+    text-align: center;
+    padding: 1rem;
+}
