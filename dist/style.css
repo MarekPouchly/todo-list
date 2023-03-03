@@ -73,29 +73,25 @@ header {
     margin-bottom: 1rem;
 }
 
-.menu-link {
+.btn {
+    text-align: left;
     font-size: 1.3rem;
     padding: 0.7rem 1.5rem;
+    width: 100%;
 }
 
-.menu-link:hover, .menu-link:focus, .add-project:focus, .add-project:hover {
+.btn:focus, .btn:hover {
     background: var(--main-background);
     border-radius: 0.3rem;
 }
 
-.menu-link i, .add-project i {
+.btn i {
     padding-right: 0.7rem;
 }
 
 .projects h1 {
     margin-bottom: 1rem;
-}
-
-.add-project {
-    text-align-last: left;
-    font-size: 1.3rem;
-    padding: 0.7rem 1.5rem;
-    width: 100%;
+    padding-left: 1rem;
 }
 
 /* Main */
