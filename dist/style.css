@@ -3,6 +3,8 @@
     --darkest-background: #1f2325;
     --side-background: #373c3f;
     --main-background: #2f3437;
+    --button-green: #8BC34A;
+    --button-red: #FF5252;
 }
 
 *,
@@ -22,10 +24,13 @@ a {
     color: var(--font-color);
 }
 
-button {
-    background: none;
-    border: none;
-    color: var(--font-color);
+button,
+input {
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
 }
 
 body {
@@ -74,6 +79,7 @@ header {
 }
 
 .btn {
+    background: inherit;
     text-align: left;
     font-size: 1.3rem;
     padding: 0.7rem 1.5rem;
@@ -92,6 +98,48 @@ header {
 .projects h1 {
     margin-bottom: 1rem;
     padding-left: 1rem;
+}
+
+.add-project-button.active {
+    display: none;
+}
+
+.add-project-popup {
+    display: none;
+    padding: 0.3rem;
+}
+
+.add-project-popup.active {
+    display: block;
+}
+
+.input-add-project-popup {
+    background: var(--main-background);
+    border: 1px solid var(--darkest-background);
+    border-radius: 0.3rem;
+    width: 100%;
+    padding: 0.6rem;
+}
+
+.add-project-popup-buttons {
+    display: flex;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.popup-add-project-button {
+    padding: 0.7rem 1.5rem;
+    width: 50%;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+#button-add-project-popup {
+    background: var(--button-green);
+}
+
+#button-cancel-project-popup {
+    background: var(--button-red);
 }
 
 /* Main */
