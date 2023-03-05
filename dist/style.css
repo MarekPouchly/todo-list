@@ -155,6 +155,79 @@ header {
 .main {
     grid-area: main;
     background: var(--main-background);
+    padding: 2rem 4rem;
+}
+
+.main h1 {
+    margin-bottom: 1rem;
+    padding-left: 1.3rem;
+}
+
+.button-task, .task-left-side, .task-right-side {
+    display: flex;
+}
+
+.button-task {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn:hover, .btn:focus {
+    background: var(--darkest-background);
+}
+
+.task-left-side, .task-right-side {
+    display: flex;
+    align-items: center;
+}
+
+.task-right-side {
+    gap: 1rem;
+}
+
+.class-list {
+    margin-bottom: 1rem;
+}
+
+.add-task-button {
+    margin-bottom: 1rem;
+}
+
+.add-task-button.active {
+    display: none;
+}
+
+.add-task-popup {
+    padding: 0 1.3rem 1.3rem;
+}
+
+.input-add-task-popup {
+    background: var(--main-background);
+    border: 1px solid var(--darkest-background);
+    border-radius: 0.3rem;
+    width: 100%;
+    padding: 0.6rem;
+}
+
+.add-task-popup-buttons {
+    display: flex;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.popup-add-task-button {
+    padding: 0.7rem 1.5rem;
+    width: 50%;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+#button-add-task-popup {
+    background: var(--button-green);
+}
+
+#button-cancel-task-popup {
+    background: var(--button-red);
 }
 
 /* Footer */
