@@ -81,8 +81,8 @@ header {
 .btn {
     background: inherit;
     text-align: left;
-    font-size: 1.3rem;
-    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+    padding: 0.7rem 0.5rem 0.7rem 1.3rem;
     width: 100%;
 }
 
@@ -100,13 +100,17 @@ header {
     padding-left: 1rem;
 }
 
+.add-project-button {
+    margin-bottom: 1rem;
+}
+
 .add-project-button.active {
     display: none;
 }
 
 .add-project-popup {
-    display: none;
     padding: 0.3rem;
+    margin-bottom: 1rem;
 }
 
 .add-project-popup.active {
@@ -140,6 +144,11 @@ header {
 
 #button-cancel-project-popup {
     background: var(--button-red);
+}
+
+.project-button {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* Main */
