@@ -1,16 +1,15 @@
 export const UI = () => {
+    const inboxButton = document.getElementById('inbox-button');
+    const todayButton = document.getElementById('today-button');
+    const thisWeekButton = document.getElementById('this-week-button');
+    const addProjectButton = document.getElementById('add-project-button');
+    const addProjectPopupButton = document.getElementById('popup-add-project-button');
+    const closeProjectPopupButton = document.getElementById('popup-cancel-project-button');
+    const addTaskButton = document.getElementById('add-task-button');
+    const addTaskPopupButton = document.getElementById('button-add-task-popup')
+    const closeTaskPopupButton = document.getElementById('button-cancel-task-popup')
 
     const loadEventListeners = () => {
-        const inboxButton = document.getElementById('inbox-button');
-        const todayButton = document.getElementById('today-button');
-        const thisWeekButton = document.getElementById('this-week-button');
-        const addProjectButton = document.querySelector('.popup-add-project-button');
-        const addProjectPopupButton = document.querySelector('.popup-add-project-button');
-        const closeProjectPopupButton = document.querySelector('.popup-cancel-project-button');
-        const addTaskButton = document.querySelector('.add-task-button');
-        const addTaskPopupButton = document.querySelector('.popup-add-project-button')
-        const closeTaskPopupButton = document.querySelector('.popup-cancel-project-button')
-
         inboxButton.addEventListener('click', openInboxProjects);
         todayButton.addEventListener('click', openTodayProjects);
         thisWeekButton.addEventListener('click', openThisWeekProjects);
@@ -35,27 +34,38 @@ export const UI = () => {
     }
 
     const showProjectPopup = () => {
-        
-    }
-
-    const addProject = () => {
-
+        const popup = document.querySelector('.add-project-popup');
+        popup.classList.add('active');
+        addProjectButton.classList.add('active');
     }
 
     const closeProjectPopup = () => {
+        const popup = document.querySelector('.add-project-popup');
+        popup.classList.remove('active');
+        addProjectButton.classList.remove('active');
+    }
 
+    const addProject = (e) => {
+        e.preventDefault();
+        const projectName = document.getElementById('input-add-project-popup').value;
+        if( projectName !== "" ) {
+            console.log("Project created")
+        }
     }
 
     const showTaskPopup = () => {
-        
+        const popup = document.querySelector('.add-task-popup');
+        popup.classList.add('active');
+        addTaskButton.classList.add('active');
+    }
+    
+    const closeTaskPopup = () => {
+        const popup = document.querySelector('.add-task-popup');
+        popup.classList.remove('active');
+        addTaskButton.classList.remove('active');
     }
 
     const addTask = () => {
-
-    }
-
-    const closeTaskPopup = () => {
-
     }
 
     return {

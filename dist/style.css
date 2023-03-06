@@ -109,6 +109,7 @@ header {
 }
 
 .add-project-popup {
+    display: none;
     padding: 0.3rem;
     margin-bottom: 1rem;
 }
@@ -198,7 +199,12 @@ header {
 }
 
 .add-task-popup {
+    display: none;
     padding: 0 1.3rem 1.3rem;
+}
+
+.add-task-popup.active {
+    display: block;
 }
 
 .input-add-task-popup {
@@ -215,7 +221,7 @@ header {
     gap: 1rem;
 }
 
-.popup-add-task-button {
+.popup-add-task-button, .popup-cancel-task-button {
     padding: 0.7rem 1.5rem;
     width: 50%;
     border-radius: 0.3rem;
