@@ -1,2 +1,3 @@
-import DOM from "./DOM";
+import { UI } from './UI';
 
+document.addEventListener('DOMContentLoaded', UI().loadEventListeners);

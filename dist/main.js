@@ -10,13 +10,13 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/DOM.js":
-/*!********************!*\
-  !*** ./src/DOM.js ***!
-  \********************/
+/***/ "./src/UI.js":
+/*!*******************!*\
+  !*** ./src/UI.js ***!
+  \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"DOM\": () => (/* binding */ DOM)\n/* harmony export */ });\nconst DOM = () => {\r\n    \r\n}\n\n//# sourceURL=webpack://todo-list/./src/DOM.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"UI\": () => (/* binding */ UI)\n/* harmony export */ });\nconst UI = () => {\r\n\r\n    const loadEventListeners = () => {\r\n        const inboxButton = document.getElementById('inbox-button');\r\n        const todayButton = document.getElementById('today-button');\r\n        const thisWeekButton = document.getElementById('this-week-button');\r\n        const addProjectButton = document.querySelector('.popup-add-project-button');\r\n        const addProjectPopupButton = document.querySelector('.popup-add-project-button');\r\n        const closeProjectPopupButton = document.querySelector('.popup-cancel-project-button');\r\n        const addTaskButton = document.querySelector('.add-task-button');\r\n        const addTaskPopupButton = document.querySelector('.popup-add-project-button')\r\n        const closeTaskPopupButton = document.querySelector('.popup-cancel-project-button')\r\n\r\n        inboxButton.addEventListener('click', openInboxProjects);\r\n        todayButton.addEventListener('click', openTodayProjects);\r\n        thisWeekButton.addEventListener('click', openThisWeekProjects);\r\n        addProjectButton.addEventListener('click', showProjectPopup);\r\n        addProjectPopupButton.addEventListener('click', addProject);\r\n        closeProjectPopupButton.addEventListener('click', closeProjectPopup);\r\n        addTaskButton.addEventListener('click', showTaskPopup);\r\n        addTaskPopupButton.addEventListener('click', addTask);\r\n        closeTaskPopupButton.addEventListener('click', closeTaskPopup);\r\n    }\r\n\r\n    const openInboxProjects = () => {\r\n        console.log(\"hello\")\r\n    }\r\n\r\n    const openTodayProjects = () => {\r\n        \r\n    }\r\n\r\n    const openThisWeekProjects = () => {\r\n        \r\n    }\r\n\r\n    const showProjectPopup = () => {\r\n        \r\n    }\r\n\r\n    const addProject = () => {\r\n\r\n    }\r\n\r\n    const closeProjectPopup = () => {\r\n\r\n    }\r\n\r\n    const showTaskPopup = () => {\r\n        \r\n    }\r\n\r\n    const addTask = () => {\r\n\r\n    }\r\n\r\n    const closeTaskPopup = () => {\r\n\r\n    }\r\n\r\n    return {\r\n        loadEventListeners\r\n    }\r\n}\n\n//# sourceURL=webpack://todo-list/./src/UI.js?");
 
 /***/ }),
 
@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _DOM__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DOM */ \"./src/DOM.js\");\n\r\n\r\n\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _UI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UI */ \"./src/UI.js\");\n\r\n\r\ndocument.addEventListener('DOMContentLoaded', (0,_UI__WEBPACK_IMPORTED_MODULE_0__.UI)().loadEventListeners);\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
 
 /***/ })
 

@@ -131,18 +131,18 @@ header {
     gap: 1rem;
 }
 
-.popup-add-project-button {
+.popup-add-project-button, .popup-cancel-project-button {
     padding: 0.7rem 1.5rem;
     width: 50%;
     border-radius: 0.3rem;
     cursor: pointer;
 }
 
-#button-add-project-popup {
+.popup-add-project-button {
     background: var(--button-green);
 }
 
-#button-cancel-project-popup {
+.popup-cancel-project-button {
     background: var(--button-red);
 }
 
