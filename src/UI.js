@@ -9,6 +9,11 @@ export const UI = () => {
     const addTaskPopupButton = document.getElementById('button-add-task-popup')
     const closeTaskPopupButton = document.getElementById('button-cancel-task-popup')
 
+    const loadPage = () => {
+        loadEventListeners();
+        setupButtons();
+    }
+
     const loadEventListeners = () => {
         inboxButton.addEventListener('click', openInboxProjects);
         todayButton.addEventListener('click', openTodayProjects);
@@ -19,6 +24,13 @@ export const UI = () => {
         addTaskButton.addEventListener('click', showTaskPopup);
         addTaskPopupButton.addEventListener('click', addTask);
         closeTaskPopupButton.addEventListener('click', closeTaskPopup);
+    }
+
+    const setupButtons = () => {
+        const projectButtons = document.querySelectorAll('[data-project-button]')
+        projectButtons.forEach( projectButton => {
+            projectButton.addEventListener('click', (event) => handleProjectButton(event));
+        } )
     }
 
     const openInboxProjects = () => {
@@ -53,7 +65,6 @@ export const UI = () => {
         e.preventDefault();
         const projectName = document.getElementById('input-add-project-popup').value;
         if ( projectName !== "" ) createProjectButton(projectName);
-        console.log("Not valid input");
     }
 
     const createProjectButton = (projectName) => {
@@ -62,13 +73,14 @@ export const UI = () => {
             <button class="btn project-button" data-project-button>
                 <div class="project-left-side">
                     <i class="fa-solid fa-bars"></i>
-                    ${projectName}
+                    <span>${projectName}</span>
                 </div>
                 <div class="project-right-side">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
             </button>
         `);
+        setupButtons();
         closeProjectPopup();
     }
 
@@ -111,7 +123,24 @@ export const UI = () => {
         `);
     }
 
+    const handleProjectButton = (event) => {
+        const projectName = event.currentTarget.children[0].children[1].textContent
+        if(event.target.classList.contains('fa-xmark')) {
+            deleteProject(projectName);
+            return;
+        }
+        openProject(projectName);
+    };
+
+    const openProject = (projectName) => {
+
+    }
+
+    const deleteProject = (projectName) => {
+
+    }
+
     return {
-        loadEventListeners
+        loadPage
     }
 }

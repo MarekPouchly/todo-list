@@ -1,3 +1,3 @@
 import { UI } from './UI';
 
-document.addEventListener('DOMContentLoaded', UI().loadEventListeners);
+document.addEventListener('DOMContentLoaded', UI().loadPage);
