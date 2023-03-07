@@ -42,15 +42,34 @@ export const UI = () => {
     const closeProjectPopup = () => {
         const popup = document.querySelector('.add-project-popup');
         popup.classList.remove('active');
+
+        const input = document.getElementById('input-add-project-popup');
+        input.value = "";
+
         addProjectButton.classList.remove('active');
     }
 
     const addProject = (e) => {
         e.preventDefault();
         const projectName = document.getElementById('input-add-project-popup').value;
-        if( projectName !== "" ) {
-            console.log("Project created")
-        }
+        if ( projectName !== "" ) createProjectButton(projectName);
+        console.log("Not valid input");
+    }
+
+    const createProjectButton = (projectName) => {
+        const projectsList = document.getElementById('projects-list');
+        projectsList.insertAdjacentHTML('afterbegin', `
+            <button class="btn project-button" data-project-button>
+                <div class="project-left-side">
+                    <i class="fa-solid fa-bars"></i>
+                    ${projectName}
+                </div>
+                <div class="project-right-side">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </button>
+        `);
+        closeProjectPopup();
     }
 
     const showTaskPopup = () => {
@@ -62,10 +81,34 @@ export const UI = () => {
     const closeTaskPopup = () => {
         const popup = document.querySelector('.add-task-popup');
         popup.classList.remove('active');
+
+        const input = document.getElementById('input-add-task-popup');
+        input.value = "";
+
         addTaskButton.classList.remove('active');
     }
 
-    const addTask = () => {
+    const addTask = (e) => {
+        e.preventDefault();
+        const taskName = document.getElementById('input-add-task-popup').value;
+        if( taskName !== "" ) createTask(taskName, "No date");
+        closeTaskPopup();
+    }
+
+    const createTask = (taskName, date) => {
+        const tasksList = document.getElementById('task-list');
+        tasksList.insertAdjacentHTML('beforeend', `
+            <button class="btn button-task" data-task-button>
+                <div class="task-left-side">
+                    <i class="fa-regular fa-circle"></i>
+                    <p class="task-content">${taskName}</p>
+                </div>
+                <div class="task-right-side">
+                    <div class="task-date">${date}</div>
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </button>
+        `);
     }
 
     return {

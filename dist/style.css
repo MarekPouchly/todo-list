@@ -191,6 +191,7 @@ header {
 }
 
 .add-task-button {
+    margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
@@ -199,6 +200,7 @@ header {
 }
 
 .add-task-popup {
+    margin-top: 1rem;
     display: none;
     padding: 0 1.3rem 1.3rem;
 }
