@@ -1,4 +1,4 @@
-import { Project } from './project.js';
+import { Project } from './Project.js';
 
 export class TodoList {
     constructor() {
@@ -16,8 +16,18 @@ export class TodoList {
     }
   
     getProject(projectName) {
-      return this.projects.find(project => project.getName() === projectName);
+        const project = this.projects.find(project => project.getName() === projectName);
+        console.log(project);
+        if (project !== null) {
+            return project;
+        } else {
+            return true;
+        }
     }
+
+    contains(projectName) {
+        return this.projects.some((project) => project.name === projectName);
+      }
   
     getAllProjects() {
       return this.projects;

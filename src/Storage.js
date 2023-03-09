@@ -1,4 +1,4 @@
-import { TodoList } from "./TodoList";
+import { TodoList } from "./Todolist";
 
 export class Storage {
     static saveTodoList(todoList) {
@@ -6,12 +6,7 @@ export class Storage {
     }
 
     static getTodoList() {
-        const todoList = localStorage.getItem("todoList");
-        if (todoList !== null) {
-            JSON.parse(todoList)
-        } else {
-            return null;
-        }
+        return Object.assign(new TodoList(), JSON.parse(localStorage.getItem("todoList")));
     }
 
     static addProject(projectName){

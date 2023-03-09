@@ -1,97 +1,100 @@
-import { Storage } from "./Storage";
-import { Project } from "./Project";
+import { Storage } from './Storage.js';
+import { TodoList } from './Todolist.js';
+import { Project } from './Project.js';
+import { Task } from './Task.js';
 
-export const UI = () => {
-    const inboxButton = document.getElementById('inbox-button');
-    const todayButton = document.getElementById('today-button');
-    const thisWeekButton = document.getElementById('this-week-button');
-    const addProjectButton = document.getElementById('add-project-button');
-    const addProjectPopupButton = document.getElementById('popup-add-project-button');
-    const closeProjectPopupButton = document.getElementById('popup-cancel-project-button');
-    const addTaskButton = document.getElementById('add-task-button');
-    const addTaskPopupButton = document.getElementById('button-add-task-popup')
-    const closeTaskPopupButton = document.getElementById('button-cancel-task-popup')
-
-    const loadPage = () => {
-        loadProjects();
-        loadEventListeners();
-        setupButtons();
+export class UI {
+    static loadPage() {
+        this.loadProjects();
+        this.loadEventListeners();
+        this.setupButtons();
     }
 
-    const loadProjects = () => {
-        Storage().getProjectsList()
-          .getProjects()
-          .forEach((project) => createProjectButton(project.name));
-      }
+    static loadProjects() {
+        const todoList = Storage.getTodoList();
+        if (todoList !== null) {
+            const projects = todoList.getAllProjects();
+            projects.forEach(project => this.createProjectButton(project.name))
+        }
+    }
+    
+    static loadEventListeners() {
+        const inboxButton = document.getElementById('inbox-button');
+        const todayButton = document.getElementById('today-button');
+        const thisWeekButton = document.getElementById('this-week-button');
+        const addProjectButton = document.getElementById('add-project-button');
+        const addProjectPopupButton = document.getElementById('popup-add-project-button');
+        const closeProjectPopupButton = document.getElementById('popup-cancel-project-button');
+        const addTaskButton = document.getElementById('add-task-button');
+        const addTaskPopupButton = document.getElementById('button-add-task-popup');
+        const closeTaskPopupButton = document.getElementById('button-cancel-task-popup');
 
-    const loadEventListeners = () => {
-        inboxButton.addEventListener('click', openInboxProjects);
-        todayButton.addEventListener('click', openTodayProjects);
-        thisWeekButton.addEventListener('click', openThisWeekProjects);
-        addProjectButton.addEventListener('click', showProjectPopup);
-        addProjectPopupButton.addEventListener('click', addProject);
-        closeProjectPopupButton.addEventListener('click', closeProjectPopup);
-        addTaskButton.addEventListener('click', showTaskPopup);
-        addTaskPopupButton.addEventListener('click', addTask);
-        closeTaskPopupButton.addEventListener('click', closeTaskPopup);
+        inboxButton.addEventListener('click', UI.openInboxProjects);
+        todayButton.addEventListener('click', UI.openTodayProjects);
+        thisWeekButton.addEventListener('click', UI.openThisWeekProjects);
+        addProjectButton.addEventListener('click', UI.showProjectPopup);
+        addProjectPopupButton.addEventListener('click', UI.addProject);
+        closeProjectPopupButton.addEventListener('click', UI.closeProjectPopup);
+        addTaskButton.addEventListener('click', UI.showTaskPopup);
+        addTaskPopupButton.addEventListener('click', UI.addTask);
+        closeTaskPopupButton.addEventListener('click', UI.closeTaskPopup);
     }
 
-    const setupButtons = () => {
+    static setupButtons() {
         const projectButtons = document.querySelectorAll('[data-project-button]')
         projectButtons.forEach( projectButton => {
-            projectButton.addEventListener('click', (event) => handleProjectButton(event));
+            projectButton.addEventListener('click', (event) => this.handleProjectButton(event));
         } )
     }
 
-    const openInboxProjects = () => {
+    static openInboxProjects() {
         console.log("hello")
     }
 
-    const openTodayProjects = () => {
+    static openTodayProjects() {
         
     }
 
-    const openThisWeekProjects = () => {
+    static openThisWeekProjects() {
         
     }
 
-    const showProjectPopup = () => {
+    static showProjectPopup() {
         const popup = document.querySelector('.add-project-popup');
         popup.classList.add('active');
+
+        const addProjectButton = document.getElementById('add-project-button');
         addProjectButton.classList.add('active');
     }
 
-    const closeProjectPopup = () => {
+    static closeProjectPopup() {
         const popup = document.querySelector('.add-project-popup');
         popup.classList.remove('active');
 
         const input = document.getElementById('input-add-project-popup');
         input.value = "";
 
+        const addProjectButton = document.getElementById('add-project-button');
         addProjectButton.classList.remove('active');
     }
 
-    const addProject = (e) => {
+    static addProject(e) {
         e.preventDefault();
         const projectName = document.getElementById('input-add-project-popup').value;
         if (projectName === "") {
             alert("You must set Project Name");
             return;
         }
-        const projectsList = Storage().getProjectsList();
-        console.log(projectsList);
-        if (projectsList.getProject(projectName)) {
+        if (Storage.getTodoList().contains(projectName)) {
             alert("set different name");
             return;
         }
-        const newProject = Project(projectName);
-        projectsList.addProject(newProject);
-        createProjectButton(projectName);
-        closeProjectPopup();
-        console.log(Storage().getProjectsList().getProjects());
+        Storage.addProject(projectName);
+        UI.createProjectButton(projectName);
+        UI.closeProjectPopup();
     }
 
-    const createProjectButton = (projectName) => {
+    static createProjectButton(projectName) {
         const projectsList = document.getElementById('projects-list');
         projectsList.insertAdjacentHTML('afterbegin', `
             <button class="btn project-button" data-project-button>
@@ -104,33 +107,36 @@ export const UI = () => {
                 </div>
             </button>
         `);
-        setupButtons();
+        this.setupButtons();
     }
 
-    const showTaskPopup = () => {
+    static showTaskPopup() {
         const popup = document.querySelector('.add-task-popup');
         popup.classList.add('active');
+
+        const addTaskButton = document.getElementById('add-task-button');
         addTaskButton.classList.add('active');
     }
-    
-    const closeTaskPopup = () => {
+
+    static closeTaskPopup() {
         const popup = document.querySelector('.add-task-popup');
         popup.classList.remove('active');
 
         const input = document.getElementById('input-add-task-popup');
         input.value = "";
 
+        const addTaskButton = document.getElementById('add-task-button');
         addTaskButton.classList.remove('active');
     }
 
-    const addTask = (e) => {
+    static addTask(e) {
         e.preventDefault();
         const taskName = document.getElementById('input-add-task-popup').value;
-        if( taskName !== "" ) createTask(taskName, "No date");
-        closeTaskPopup();
+        if( taskName !== "" ) this.createTask(taskName, "No date");
+        this.closeTaskPopup();
     }
 
-    const createTask = (taskName, date) => {
+    static createTask(taskName, dueDate) {
         const tasksList = document.getElementById('task-list');
         tasksList.insertAdjacentHTML('beforeend', `
             <button class="btn button-task" data-task-button>
@@ -139,31 +145,28 @@ export const UI = () => {
                     <p class="task-content">${taskName}</p>
                 </div>
                 <div class="task-right-side">
-                    <div class="task-date">${date}</div>
+                    <div class="task-date">${dueDate}</div>
                     <i class="fa-solid fa-xmark"></i>
                 </div>
             </button>
-        `);
+        `)
     }
 
-    const handleProjectButton = (event) => {
+    static handleProjectButton(event) {
         const projectName = event.currentTarget.children[0].children[1].textContent
         if(event.target.classList.contains('fa-xmark')) {
-            deleteProject(projectName);
+            this.deleteProject(projectName);
             return;
         }
-        openProject(projectName);
-    };
+        this.openProject(projectName);
+    }
 
-    const openProject = (projectName) => {
+    static openProject(projectName) {
 
     }
 
-    const deleteProject = (projectName) => {
+    static deleteProject(projectName) {
 
     }
 
-    return {
-        loadPage
-    }
 }
