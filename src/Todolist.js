@@ -11,13 +11,12 @@ export class TodoList {
     }
   
     deleteProject(projectName) {
-        const project = projects.find(project => project.getName() === projectName);
-        projects.splice(projects.indexOf(project), 1);
+        const project = this.projects.find(project => project.name === projectName);
+        this.projects.splice(this.projects.indexOf(project), 1);
     }
   
     getProject(projectName) {
         const project = this.projects.find(project => project.getName() === projectName);
-        console.log(project);
         if (project !== null) {
             return project;
         } else {

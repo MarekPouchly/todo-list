@@ -43,12 +43,11 @@ export class UI {
     static setupButtons() {
         const projectButtons = document.querySelectorAll('[data-project-button]')
         projectButtons.forEach( projectButton => {
-            projectButton.addEventListener('click', (event) => this.handleProjectButton(event));
-        } )
+            projectButton.addEventListener('click', UI.handleProjectButton);
+        })        
     }
 
     static openInboxProjects() {
-        console.log("hello")
     }
 
     static openTodayProjects() {
@@ -58,6 +57,8 @@ export class UI {
     static openThisWeekProjects() {
         
     }
+
+    /* Projects */
 
     static showProjectPopup() {
         const popup = document.querySelector('.add-project-popup');
@@ -94,6 +95,26 @@ export class UI {
         UI.closeProjectPopup();
     }
 
+    static handleProjectButton(event) {
+        let projectName = this.children[0].children[1].textContent;
+        if(event.target.classList.contains('fa-xmark')) {
+            projectName = event.currentTarget.children[0].children[1].textContent;
+            UI.deleteProject(projectName);
+            return;
+        }
+        UI.openProject(projectName);
+    }
+
+    static deleteProject(projectName) {
+        Storage.deleteProject(projectName);
+        this.clearProjectsList();
+        this.loadProjects()
+    }
+
+    static openProject(projectName) {
+        
+    }
+
     static createProjectButton(projectName) {
         const projectsList = document.getElementById('projects-list');
         projectsList.insertAdjacentHTML('afterbegin', `
@@ -110,6 +131,12 @@ export class UI {
         this.setupButtons();
     }
 
+    static clearProjectsList() {
+        const projectsList = document.getElementById('projects-list');
+        projectsList.textContent = "";
+    }
+
+    /* Tasks */
     static showTaskPopup() {
         const popup = document.querySelector('.add-task-popup');
         popup.classList.add('active');
@@ -151,22 +178,4 @@ export class UI {
             </button>
         `)
     }
-
-    static handleProjectButton(event) {
-        const projectName = event.currentTarget.children[0].children[1].textContent
-        if(event.target.classList.contains('fa-xmark')) {
-            this.deleteProject(projectName);
-            return;
-        }
-        this.openProject(projectName);
-    }
-
-    static openProject(projectName) {
-
-    }
-
-    static deleteProject(projectName) {
-
-    }
-
 }

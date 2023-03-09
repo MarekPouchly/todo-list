@@ -18,6 +18,6 @@ export class Storage {
     static deleteProject(projectName) {
         const todoList = this.getTodoList();
         todoList.deleteProject(projectName);
-        localStorage.setItem(todoList);
+        this.saveTodoList(todoList)
     }
 }
