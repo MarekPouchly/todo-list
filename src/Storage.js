@@ -1,33 +1,28 @@
-import ProjectsList from "./ProjectsList";
+import { TodoList } from "./TodoList";
 
-export const Storage = () => {
-    const saveProjectsList = (data) => {
-        localStorage.setItem("projectsList", JSON.stringify(data));
+export class Storage {
+    static saveTodoList(todoList) {
+        localStorage.setItem("todoList", JSON.stringify(todoList));
     }
 
-    const getProjectsList = () => {
-        return JSON.parse(localStorage.getItem("projectsList"));
-    }
-
-    const addProject = (project) => {
-        const projectsList = ProjectsList();
-        if (getProjectsList() !== null) {
-            projectsList = Object.assign(ProjectsList(), getProjectsList())
+    static getTodoList() {
+        const todoList = localStorage.getItem("todoList");
+        if (todoList !== null) {
+            JSON.parse(todoList)
+        } else {
+            return null;
         }
-        projectsList.addProject(project);
-        saveProjectsList(projectsList);
     }
 
-    const deleteProject = (project) => {
-        const projectsList = Object.assign(ProjectsList(), getProjectsList());
-        projectsList.deleteProject(project);
-        saveProjectsList(projectsList);
+    static addProject(projectName){
+        const todoList = this.getTodoList() || new TodoList;
+        todoList.addProject(projectName);
+        this.saveTodoList(todoList);
     }
-
-    return {
-        saveProjectsList,
-        getProjectsList,
-        addProject,
-        deleteProject,
+  
+    static deleteProject(projectName) {
+        const todoList = this.getTodoList();
+        todoList.deleteProject(projectName);
+        localStorage.setItem(todoList);
     }
 }

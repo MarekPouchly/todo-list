@@ -1,26 +1,22 @@
-export const Task = (name, date = "No date") => {
-    
-    const setName = ( taskName ) => {
-        name = taskName;
+export class Task {
+    constructor(name, dueDate = "No date") {
+      this.name = name;
+      this.dueDate = dueDate;
+    }
+  
+    setName(name) {
+      this.name = name;
+    }
+  
+    getName() {
+      return this.name;
     }
 
-    const getName = () => {
-        return name;       
+    setDate(dueDate) {
+        this.dueDate = dueDate;
     }
 
-    const setDate = ( newDate ) => {
-        date = newDate;
+    getDate() {
+        return this.dueDate;
     }
-
-    const getDate = () => {
-        return date;
-    }
-
-    return {
-        setName,
-        getName,
-        setDate,
-        getDate,
-    }
-
-}
+};

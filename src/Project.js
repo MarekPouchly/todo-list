@@ -1,37 +1,34 @@
-export const Project = (name) => {
-    const tasks = [];
+import { Task } from './task.js';
 
-    const setName = (newName) => {
-        name = newName;
+export class Project {
+    constructor(name) {
+        this.name = name;
+        this.tasks = [];
     }
 
-    const getName = () => {
-        return name;
+    setName(name) {
+        this.name = name;
     }
 
-    const addTask = (task) => {
-        tasks.push(task);
+    getName() {
+        return this.name;
     }
 
-    const removeTask = (taskName) => {
-        const task = tasks.find( (task) => task.name === taskName);
+    addTask(taskName) {
+        const task = new Task(taskName);
+        this.tasks.push(task);
+    }
+
+    deleteTask(taskName) {
+        const task = this.tasks.find((task) => task.name === taskName);
         tasks.splice(tasks.indexOf(task), 1);
     }
 
-    const getTask = (taskName) => {
-        return tasks.find( (task) => task.name === taskName);
+    getTask(taskName) {
+        return tasks.find((task) => task.name === taskName);
     }
 
-    const getTasks = () => {
-        return tasks;
+    getAllTasks() {
+        return this.tasks;
     }
-
-    return {
-        setName,
-        getName,
-        addTask,
-        removeTask,
-        getTask,
-        getTasks,
-    };
 }

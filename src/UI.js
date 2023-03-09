@@ -1,3 +1,6 @@
+import { Storage } from "./Storage";
+import { Project } from "./Project";
+
 export const UI = () => {
     const inboxButton = document.getElementById('inbox-button');
     const todayButton = document.getElementById('today-button');
@@ -10,9 +13,16 @@ export const UI = () => {
     const closeTaskPopupButton = document.getElementById('button-cancel-task-popup')
 
     const loadPage = () => {
+        loadProjects();
         loadEventListeners();
         setupButtons();
     }
+
+    const loadProjects = () => {
+        Storage().getProjectsList()
+          .getProjects()
+          .forEach((project) => createProjectButton(project.name));
+      }
 
     const loadEventListeners = () => {
         inboxButton.addEventListener('click', openInboxProjects);
@@ -64,8 +74,21 @@ export const UI = () => {
     const addProject = (e) => {
         e.preventDefault();
         const projectName = document.getElementById('input-add-project-popup').value;
-        if ( projectName !== "" ) createProjectButton(projectName);
+        if (projectName === "") {
+            alert("You must set Project Name");
+            return;
+        }
+        const projectsList = Storage().getProjectsList();
+        console.log(projectsList);
+        if (projectsList.getProject(projectName)) {
+            alert("set different name");
+            return;
+        }
+        const newProject = Project(projectName);
+        projectsList.addProject(newProject);
+        createProjectButton(projectName);
         closeProjectPopup();
+        console.log(Storage().getProjectsList().getProjects());
     }
 
     const createProjectButton = (projectName) => {
