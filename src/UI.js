@@ -65,6 +65,7 @@ export const UI = () => {
         e.preventDefault();
         const projectName = document.getElementById('input-add-project-popup').value;
         if ( projectName !== "" ) createProjectButton(projectName);
+        closeProjectPopup();
     }
 
     const createProjectButton = (projectName) => {
@@ -81,7 +82,6 @@ export const UI = () => {
             </button>
         `);
         setupButtons();
-        closeProjectPopup();
     }
 
     const showTaskPopup = () => {

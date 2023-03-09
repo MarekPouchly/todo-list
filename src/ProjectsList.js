@@ -6,7 +6,7 @@ export const ProjectsList = () => {
         projects.push(project)
     }
 
-    const removeProject = ( projectName ) =>{
+    const deleteProject = ( projectName ) =>{
         const project = projects.find(( project ) => {
             project.name === projectName;
         })
@@ -23,7 +23,7 @@ export const ProjectsList = () => {
 
     return {
         addProject,
-        removeProject,
+        deleteProject,
         getProject,
         getProjects,
     }
