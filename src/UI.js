@@ -114,6 +114,7 @@ export default class UI {
     static openProject(projectName) {
         const previewTitle = document.getElementById('preview-title');
         previewTitle.textContent = projectName;
+        UI.updateTaskUI(projectName)
     }
 
     static createProjectButton(projectName) {
@@ -170,7 +171,15 @@ export default class UI {
         }
 
         Storage.addTask(projectName, taskName, dueDate);
-        this.closeTaskPopup();
+        UI.updateTaskUI(projectName);
+        UI.closeTaskPopup();
+    }
+
+    static updateTaskUI(projectName) {
+        UI.clearTaskUI();
+        const project = Storage.getTodoList().getProject(projectName);
+        const tasks = project.getAllTasks();
+        tasks.forEach((task) => UI.createTask(task.name, "No date"));
     }
 
     static createTask(taskName, dueDate) {
@@ -187,6 +196,10 @@ export default class UI {
                 </div>
             </button>
         `)
+    }
 
+    static clearTaskUI() {
+        const taskList = document.getElementById('task-list');
+        taskList.textContent = "";
     }
 }
