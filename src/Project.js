@@ -19,16 +19,16 @@ export default class Project {
     }
 
     deleteTask(taskName) {
-        const task = this.tasks.find((task) => task.getName() === taskName);
+        const task = this.tasks.find((task) => task.name === taskName);
         this.tasks.splice(this.tasks.indexOf(task), 1);
     }
 
     hasTask(taskName) {
-        return this.tasks.some(task => task.getName() === taskName);
+        return this.tasks.some(task => task.name === taskName);
     }
 
     getTask(taskName) {
-        return this.tasks.find((task) => task.getName() === taskName);
+        return this.tasks.find((task) => task.name === taskName);
     }
 
     getAllTasks() {

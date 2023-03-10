@@ -7,7 +7,7 @@ export default class UI {
     static loadPage() {
         this.loadProjects();
         this.loadEventListeners();
-        this.setupButtons();
+        this.setupProjectButtons();
     }
 
     static loadProjects() {
@@ -40,7 +40,7 @@ export default class UI {
         closeTaskPopupButton.addEventListener('click', UI.closeTaskPopup);
     }
 
-    static setupButtons() {
+    static setupProjectButtons() {
         const projectButtons = document.querySelectorAll('[data-project-button]')
         projectButtons.forEach( projectButton => {
             projectButton.addEventListener('click', UI.handleProjectButton);
@@ -130,7 +130,7 @@ export default class UI {
                 </div>
             </button>
         `);
-        this.setupButtons();
+        this.setupProjectButtons();
     }
 
     static clearProjectsList() {
@@ -175,11 +175,18 @@ export default class UI {
         UI.closeTaskPopup();
     }
 
+    static deleteTask(taskName) {
+        const projectName = document.getElementById("preview-title").textContent;
+        Storage.deleteTask(projectName, taskName);
+        UI.updateTaskUI(projectName)
+    }
+
     static updateTaskUI(projectName) {
-        UI.clearTaskUI();
+        UI.clearTaskList();
         const project = Storage.getTodoList().getProject(projectName);
         const tasks = project.getAllTasks();
         tasks.forEach((task) => UI.createTask(task.name, "No date"));
+        UI.setupTaskButtons()
     }
 
     static createTask(taskName, dueDate) {
@@ -198,8 +205,23 @@ export default class UI {
         `)
     }
 
-    static clearTaskUI() {
+    static clearTaskList() {
         const taskList = document.getElementById('task-list');
         taskList.textContent = "";
+    }
+
+    static setupTaskButtons() {
+        const taskButtons = document.querySelectorAll('[data-task-button]');
+        taskButtons.forEach( taskButton => {
+            taskButton.addEventListener('click', UI.handleTaskButton);
+        })  
+    }
+
+    static handleTaskButton(event) {
+        const taskName = this.children[0].children[1].textContent;
+        if (event.target.classList.contains("fa-xmark")) {
+            UI.deleteTask(taskName);
+            return;
+        }
     }
 }
