@@ -1,6 +1,6 @@
-import { Task } from './Task.js';
+import Task from './Task';
 
-export class Project {
+export default class Project {
     constructor(name) {
         this.name = name;
         this.tasks = [];
@@ -14,18 +14,21 @@ export class Project {
         return this.name;
     }
 
-    addTask(taskName) {
-        const task = new Task(taskName);
-        this.tasks.push(task);
+    addTask(taskName, dueDate) {
+        this.tasks.push(new Task(taskName, dueDate));
     }
 
     deleteTask(taskName) {
-        const task = this.tasks.find((task) => task.name === taskName);
-        tasks.splice(tasks.indexOf(task), 1);
+        const task = this.tasks.find((task) => task.getName() === taskName);
+        this.tasks.splice(this.tasks.indexOf(task), 1);
+    }
+
+    hasTask(taskName) {
+        return this.tasks.some(task => task.getName() === taskName);
     }
 
     getTask(taskName) {
-        return tasks.find((task) => task.name === taskName);
+        return this.tasks.find((task) => task.getName() === taskName);
     }
 
     getAllTasks() {

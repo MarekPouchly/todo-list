@@ -1,9 +1,9 @@
-import { Storage } from './Storage.js';
-import { TodoList } from './Todolist.js';
-import { Project } from './Project.js';
-import { Task } from './Task.js';
+import Storage from './Storage';
+import TodoList from './Todolist';
+import Project from './Project';
+import Task from './Task';
 
-export class UI {
+export default class UI {
     static loadPage() {
         this.loadProjects();
         this.loadEventListeners();
@@ -112,7 +112,8 @@ export class UI {
     }
 
     static openProject(projectName) {
-        
+        const previewTitle = document.getElementById('preview-title');
+        previewTitle.textContent = projectName;
     }
 
     static createProjectButton(projectName) {
@@ -158,8 +159,17 @@ export class UI {
 
     static addTask(e) {
         e.preventDefault();
+
+        const projectName = document.getElementById('preview-title').textContent;
         const taskName = document.getElementById('input-add-task-popup').value;
-        if( taskName !== "" ) this.createTask(taskName, "No date");
+        const dueDate = "No date";
+
+        if (taskName === "") {
+            alert("Set task name");
+            return;
+        }
+
+        Storage.addTask(projectName, taskName, dueDate);
         this.closeTaskPopup();
     }
 
@@ -177,5 +187,6 @@ export class UI {
                 </div>
             </button>
         `)
+
     }
 }

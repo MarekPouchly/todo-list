@@ -1,16 +1,21 @@
-import { TodoList } from "./Todolist";
+import TodoList from "./Todolist";
+import Project from "./Project";
 
-export class Storage {
+export default class Storage {
     static saveTodoList(todoList) {
         localStorage.setItem("todoList", JSON.stringify(todoList));
     }
 
     static getTodoList() {
-        return Object.assign(new TodoList(), JSON.parse(localStorage.getItem("todoList")));
+        const todoList = JSON.parse(localStorage.getItem("todoList"));
+        if (todoList) {
+            return Object.assign(new TodoList(), todoList);
+        }
+        return new TodoList();
     }
 
     static addProject(projectName){
-        const todoList = this.getTodoList() || new TodoList;
+        const todoList = this.getTodoList();
         todoList.addProject(projectName);
         this.saveTodoList(todoList);
     }
@@ -19,5 +24,15 @@ export class Storage {
         const todoList = this.getTodoList();
         todoList.deleteProject(projectName);
         this.saveTodoList(todoList)
+    }
+
+    static addTask(projectName, taskName, dueDate) {
+        const todoList = Storage.getTodoList();
+        todoList.getProject(projectName).addTask(taskName, dueDate);
+        this.saveTodoList(todoList);
+    }
+
+    static deleteTask() {
+
     }
 }

@@ -170,7 +170,7 @@ header {
     padding: 2rem 4rem;
 }
 
-.main h1 {
+.main .preview-title {
     margin-bottom: 1rem;
     padding-left: 1.3rem;
 }
