@@ -66,6 +66,9 @@ export default class UI {
 
         const addProjectButton = document.getElementById('add-project-button');
         addProjectButton.classList.add('active');
+
+        const input = document.getElementById('input-add-project-popup');
+        input.focus();
     }
 
     static closeProjectPopup() {
@@ -145,6 +148,9 @@ export default class UI {
 
         const addTaskButton = document.getElementById('add-task-button');
         addTaskButton.classList.add('active');
+
+        const input = document.getElementById('input-add-task-popup');
+        input.focus();
     }
 
     static closeTaskPopup() {
@@ -195,7 +201,8 @@ export default class UI {
             <button class="btn button-task" data-task-button>
                 <div class="task-left-side">
                     <i class="fa-regular fa-circle"></i>
-                    <p class="task-content">${taskName}</p>
+                    <p class="task-name">${taskName}</p>
+                    <input type="text" class="input-task-name" data-task-name-input>
                 </div>
                 <div class="task-right-side">
                     <div class="task-date">${dueDate}</div>
@@ -212,16 +219,55 @@ export default class UI {
 
     static setupTaskButtons() {
         const taskButtons = document.querySelectorAll('[data-task-button]');
-        taskButtons.forEach( taskButton => {
+        const taskNameInputs = document.querySelectorAll('[data-task-name-input]')
+        taskButtons.forEach((taskButton) => {
             taskButton.addEventListener('click', UI.handleTaskButton);
-        })  
+        })
+        taskNameInputs.forEach((input) => {
+            input.addEventListener('keypress', UI.renameTask);
+        })
     }
 
     static handleTaskButton(event) {
         const taskName = this.children[0].children[1].textContent;
+        const projectName = document.getElementById('preview-title');
         if (event.target.classList.contains("fa-xmark")) {
             UI.deleteTask(taskName);
             return;
         }
+        if (event.target.classList.contains("task-name")) {
+            if (event.detail === 2) {
+                UI.showRenameTaskInput(this);
+            }
+        }
+    }
+
+    static showRenameTaskInput(taskButton) {
+        const taskNameParagraph = taskButton.children[0].children[1];
+        const taskName = taskButton.children[0].children[1].textContent;
+        const renameTaskInput = taskButton.children[0].children[2];
+
+        taskNameParagraph.classList.add('active');
+        renameTaskInput.classList.add('active');
+        renameTaskInput.value = taskName;
+    }
+
+    static renameTask(e) {
+        if (e.key === "Enter") {
+            const oldTaskName = this.previousElementSibling.textContent;
+            const newTaskName = this.value;
+            const projectName = document.getElementById('preview-title').textContent;
+
+            Storage.renameTask(projectName, oldTaskName, newTaskName)
+            UI.updateTaskUI(projectName)
+            UI.closeRenameTaskInput(this);
+        }
+    }
+
+    static closeRenameTaskInput(taskButton) {
+        const taskNameParagraph = taskButton.previousElementSibling;
+
+        taskNameParagraph.classList.remove('active');
+        taskButton.classList.remove('active');
     }
 }

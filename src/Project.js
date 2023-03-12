@@ -28,7 +28,8 @@ export default class Project {
     }
 
     getTask(taskName) {
-        return this.tasks.find((task) => task.name === taskName);
+        const index = this.tasks.findIndex((task) => task.name === taskName);
+        return index !== -1 ? index : null;
     }
 
     getAllTasks() {
