@@ -188,17 +188,29 @@ header {
     background: var(--darkest-background);
 }
 
+.task-list {
+    margin-bottom: 1rem;
+}
+
 .task-left-side, .task-right-side {
     display: flex;
     align-items: center;
+}
+
+.task-left-side i {
+    padding: 0.4rem;
 }
 
 .task-right-side {
     gap: 1rem;
 }
 
-.class-list {
-    margin-bottom: 1rem;
+.fa-circle {
+    font-size: 1rem;
+}
+
+.fa-circle.active {
+    display: none;
 }
 
 .add-task-button {
@@ -239,6 +251,12 @@ header {
 .task-name.active {
     display: none;
 }
+
+.task-name.completed {
+    color: #b8b8b8;
+    text-decoration: line-through;
+}
+
 
 .input-task-name {
     display: none;

@@ -47,4 +47,14 @@ export default class Storage {
             Storage.saveTodoList(todoList);
         }
     }
+
+    static setCompleteTask(projectName, taskName, status) {
+        const todoList = Storage.getTodoList();
+        const project = todoList.getProject(projectName);
+        const taskIndex = project.getTask(taskName);
+        if (taskIndex !== null) {
+            project.tasks[taskIndex].completed = status;
+            Storage.saveTodoList(todoList);
+        }
+    }
 }

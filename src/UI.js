@@ -197,17 +197,17 @@ export default class UI {
         UI.clearTaskList();
         const project = Storage.getTodoList().getProject(projectName);
         const tasks = project.getAllTasks();
-        tasks.forEach((task) => UI.createTask(task.name, "No date"));
+        tasks.forEach((task) => UI.createTask(task.name, "No date", task.completed));
         UI.setupTaskButtons()
     }
 
-    static createTask(taskName, dueDate) {
+    static createTask(taskName, dueDate, taskCompleted) {
         const tasksList = document.getElementById('task-list');
         tasksList.insertAdjacentHTML('beforeend', `
             <button class="btn button-task" data-task-button>
                 <div class="task-left-side">
-                    <i class="fa-regular fa-circle"></i>
-                    <p class="task-name">${taskName}</p>
+                    <i class="fa-circle ${taskCompleted ? 'fa-solid' : 'fa-regular'}"></i>
+                    <p class="task-name ${taskCompleted ? 'completed' : ''}">${taskName}</p>
                     <input type="text" class="input-task-name" data-task-name-input>
                 </div>
                 <div class="task-right-side">
@@ -245,6 +245,9 @@ export default class UI {
             if (event.detail === 2) {
                 UI.showRenameTaskInput(this);
             }
+        }
+        if (event.target.classList.contains("fa-circle")) {
+            UI.handleCompleteTask(this);
         }
     }
 
@@ -308,4 +311,22 @@ export default class UI {
         UI.closeTaskPopup();
         UI.closeOtherTaskInputs()
     }
+
+    static handleCompleteTask(taskButton) {
+        const projectName = document.getElementById('preview-title').textContent;
+        const taskName = taskButton.children[0].children[1].textContent;
+        const icon = taskButton.children[0].children[0];
+        const status = UI.getTaskCompleteStatus(projectName, taskName);
+
+        Storage.setCompleteTask(projectName, taskName, status);
+        UI.updateTaskUI(projectName);
+    }
+
+    static getTaskCompleteStatus(projectName, taskName) {
+        const project = Storage.getTodoList().getProject(projectName);
+        const taskIndex = project.getTask(taskName);
+        return !(project.tasks[taskIndex].completed);
+    }
+
+
 }
