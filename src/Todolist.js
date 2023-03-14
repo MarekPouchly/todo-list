@@ -3,6 +3,7 @@ import Project from './Project';
 export default class TodoList {
     constructor() {
       this.projects = [];
+      
     };
   
     addProject(projectName) {

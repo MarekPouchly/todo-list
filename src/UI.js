@@ -1,7 +1,5 @@
 import Storage from './Storage';
 import TodoList from './Todolist';
-import Project from './Project';
-import Task from './Task';
 
 export default class UI {
     static loadPage() {
@@ -62,9 +60,10 @@ export default class UI {
 
     static showProjectPopup() {
         const popup = document.querySelector('.add-project-popup');
-        popup.classList.add('active');
-
         const addProjectButton = document.getElementById('add-project-button');
+        
+        UI.closeAllPopups();
+        popup.classList.add('active');
         addProjectButton.classList.add('active');
 
         const input = document.getElementById('input-add-project-popup');
@@ -76,7 +75,7 @@ export default class UI {
         popup.classList.remove('active');
 
         const input = document.getElementById('input-add-project-popup');
-        input.value = "";
+        input.value = '';
 
         const addProjectButton = document.getElementById('add-project-button');
         addProjectButton.classList.remove('active');
@@ -85,7 +84,7 @@ export default class UI {
     static addProject(e) {
         e.preventDefault();
         const projectName = document.getElementById('input-add-project-popup').value;
-        if (projectName === "") {
+        if (!projectName) {
             alert("You must set Project Name");
             return;
         }
@@ -105,6 +104,7 @@ export default class UI {
             UI.deleteProject(projectName);
             return;
         }
+        UI.closeAllPopups();
         UI.openProject(projectName);
     }
 
@@ -144,9 +144,10 @@ export default class UI {
     /* Tasks */
     static showTaskPopup() {
         const popup = document.querySelector('.add-task-popup');
-        popup.classList.add('active');
-
         const addTaskButton = document.getElementById('add-task-button');
+        
+        UI.closeAllPopups()
+        popup.classList.add('active');
         addTaskButton.classList.add('active');
 
         const input = document.getElementById('input-add-task-popup');
@@ -171,8 +172,13 @@ export default class UI {
         const taskName = document.getElementById('input-add-task-popup').value;
         const dueDate = "No date";
 
-        if (taskName === "") {
+        if (!taskName) {
             alert("Set task name");
+            return;
+        }
+
+        if (Storage.getTodoList().getProject(projectName).hasTask(taskName)) {
+            alert("This task is already in list");
             return;
         }
 
@@ -247,6 +253,9 @@ export default class UI {
         const taskName = taskButton.children[0].children[1].textContent;
         const renameTaskInput = taskButton.children[0].children[2];
 
+        UI.closeOtherTaskInputs();
+        UI.closeAllPopups();
+
         taskNameParagraph.classList.add('active');
         renameTaskInput.classList.add('active');
         renameTaskInput.value = taskName;
@@ -257,6 +266,17 @@ export default class UI {
             const oldTaskName = this.previousElementSibling.textContent;
             const newTaskName = this.value;
             const projectName = document.getElementById('preview-title').textContent;
+
+            if (!newTaskName) {
+                alert("You must set task name!");
+                return;
+            }
+
+            if (Storage.getTodoList().getProject(projectName).hasTask(newTaskName) && oldTaskName !== newTaskName) {
+                alert("This task is already in tasks. Set different name.");
+                UI.closeRenameTaskInput(this);
+                return;
+            }
 
             Storage.renameTask(projectName, oldTaskName, newTaskName)
             UI.updateTaskUI(projectName)
@@ -269,5 +289,23 @@ export default class UI {
 
         taskNameParagraph.classList.remove('active');
         taskButton.classList.remove('active');
+    }
+
+    static closeOtherTaskInputs() {
+        const inputs = document.querySelectorAll('[data-task-name-input]');
+        const paragraphs = document.querySelectorAll('.task-name');
+
+        if (inputs.length === 0) {
+            return;
+        }
+
+        inputs.forEach(input => input.classList.remove('active'));
+        paragraphs.forEach(paragraph => paragraph.classList.remove('active'));
+    };
+
+    static closeAllPopups() {
+        UI.closeProjectPopup();
+        UI.closeTaskPopup();
+        UI.closeOtherTaskInputs()
     }
 }
