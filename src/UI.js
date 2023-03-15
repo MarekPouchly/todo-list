@@ -251,6 +251,21 @@ export default class UI {
         }
     }
 
+    static handleCompleteTask(taskButton) {
+        const projectName = document.getElementById('preview-title').textContent;
+        const taskName = taskButton.children[0].children[1].textContent;
+        const status = UI.getTaskCompleteStatus(projectName, taskName);
+
+        Storage.setCompleteTask(projectName, taskName, status);
+        UI.updateTaskUI(projectName);
+    }
+
+    static getTaskCompleteStatus(projectName, taskName) {
+        const project = Storage.getTodoList().getProject(projectName);
+        const taskIndex = project.getTask(taskName);
+        return !(project.tasks[taskIndex].completed);
+    }
+
     static showRenameTaskInput(taskButton) {
         const taskNameParagraph = taskButton.children[0].children[1];
         const taskName = taskButton.children[0].children[1].textContent;
@@ -311,22 +326,4 @@ export default class UI {
         UI.closeTaskPopup();
         UI.closeOtherTaskInputs()
     }
-
-    static handleCompleteTask(taskButton) {
-        const projectName = document.getElementById('preview-title').textContent;
-        const taskName = taskButton.children[0].children[1].textContent;
-        const icon = taskButton.children[0].children[0];
-        const status = UI.getTaskCompleteStatus(projectName, taskName);
-
-        Storage.setCompleteTask(projectName, taskName, status);
-        UI.updateTaskUI(projectName);
-    }
-
-    static getTaskCompleteStatus(projectName, taskName) {
-        const project = Storage.getTodoList().getProject(projectName);
-        const taskIndex = project.getTask(taskName);
-        return !(project.tasks[taskIndex].completed);
-    }
-
-
 }
